@@ -99,7 +99,7 @@ lazy_static! {
 #[typetag::serde(name = "gcp_stackdriver_logging")]
 impl SinkConfig for StackdriverConfig {
     fn build(&self, cx: SinkContext) -> crate::Result<(RouterSink, Healthcheck)> {
-        let creds = self.auth.make_credentials(Scope::LoggingWrite)?;
+        let creds = self.auth.make_required_credentials(Scope::LoggingWrite)?;
         let sink = self.service(&cx, &creds)?;
         let healthcheck = self.healthcheck(&cx, &creds)?;
 
@@ -116,11 +116,7 @@ impl SinkConfig for StackdriverConfig {
 }
 
 impl StackdriverConfig {
-    fn service(
-        &self,
-        cx: &SinkContext,
-        creds: &Option<GcpCredentials>,
-    ) -> crate::Result<RouterSink> {
+    fn service(&self, cx: &SinkContext, creds: &GcpCredentials) -> crate::Result<RouterSink> {
         let batch = self.batch.unwrap_or(bytesize::kib(5000u64), 1);
         let request = self.request.unwrap_with(&REQUEST_DEFAULTS);
         let encoding = self.encoding.clone();
@@ -143,9 +139,7 @@ impl StackdriverConfig {
             body.splice(wrapper_splice..wrapper_splice, logs);
 
             let mut request = make_request(body);
-            if let Some(creds) = creds.as_ref() {
-                creds.apply(&mut request);
-            }
+            creds.apply(&mut request);
 
             request
         };
@@ -160,24 +154,16 @@ impl StackdriverConfig {
         Ok(Box::new(sink))
     }
 
-    fn healthcheck(
-        &self,
-        cx: &SinkContext,
-        creds: &Option<GcpCredentials>,
-    ) -> crate::Result<Healthcheck> {
+    fn healthcheck(&self, cx: &SinkContext, creds: &GcpCredentials) -> crate::Result<Healthcheck> {
         let mut request = make_request(Body::from(self.write_request().into_bytes()));
-
-        if let Some(creds) = creds.as_ref() {
-            creds.apply(&mut request);
-        }
+        creds.apply(&mut request);
 
         let mut client = HttpClient::new(cx.resolver(), TlsSettings::from_options(&self.tls)?)?;
-        let creds = creds.clone();
         let healthcheck = client
             .call(request)
             .map_err(Into::into)
             .and_then(healthcheck_response(
-                creds,
+                Some(creds.clone()),
                 HealthcheckError::NotFound.into(),
             ));
 
