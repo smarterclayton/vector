@@ -18,7 +18,6 @@ pub mod generate;
 #[cfg(feature = "rdkafka")]
 pub mod kafka;
 pub mod list;
-pub mod metrics;
 pub mod region;
 pub mod runtime;
 pub mod serde;
