@@ -17,6 +17,7 @@ use hyper::{
     Body, Request,
 };
 use lazy_static::lazy_static;
+use metrics::counter;
 use rusoto_core::signature::{SignedRequest, SignedRequestPayload};
 use rusoto_core::{DefaultCredentialsProvider, ProvideAwsCredentials, Region};
 use rusoto_credential::{AwsCredentials, CredentialsError};
@@ -286,7 +287,10 @@ fn encode_event(
     id_key: &Option<String>,
     encoding: &EncodingConfigWithDefault<Encoding>,
 ) -> Option<Vec<u8>> {
+    counter!("sinks.elasticsearch.events", 1);
+
     encoding.apply_rules(&mut event);
+
     let index = index
         .render_string(&event)
         .map_err(|missing_keys| {
@@ -295,6 +299,7 @@ fn encode_event(
                 ?missing_keys,
                 rate_limit_secs = 30,
             );
+            counter!("sinks.elasticsearch.missing_keys", 1);
         })
         .ok()?;
 
@@ -315,6 +320,8 @@ fn encode_event(
 
     serde_json::to_writer(&mut body, &event.into_log()).unwrap();
     body.push(b'\n');
+    counter!("sinks.elasticsearch.total_bytes", body.len() as u64);
+
     Some(body)
 }
 

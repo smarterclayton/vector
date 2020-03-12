@@ -2,6 +2,7 @@ use crate::{tls::TlsSettings, Event};
 use bytes::Bytes;
 use futures01::{future, sync::mpsc, Future, Sink, Stream};
 use listenfd::ListenFd;
+use metrics::counter;
 use openssl::ssl::SslAcceptor;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use std::{
@@ -177,7 +178,10 @@ fn handle_stream(
             let host = host.clone();
             source.build_event(frame, host)
         })
-        .map_err(|error| warn!(message = "connection error.", %error))
+        .map_err(|error| {
+            warn!(message = "connection error.", %error);
+            counter!("sources.tcp_connection_errors", 1);
+        })
         .forward(out)
         .map(|_| debug!("connection closed."));
     tokio::spawn(handler.instrument(span));
