@@ -3,6 +3,7 @@ use crate::{
     event::{Event, Value},
     topology::config::{DataType, TransformConfig, TransformContext, TransformDescription},
 };
+use metrics::{counter, gauge};
 use serde::{Deserialize, Serialize};
 use snafu::{ResultExt, Snafu};
 
@@ -101,21 +102,26 @@ impl Lua {
             func.call(())?;
             globals.get::<_, Option<Event>>("event")
         });
+
         self.invocations_after_gc += 1;
         if self.invocations_after_gc % GC_INTERVAL == 0 {
+            gauge!("transforms.lua.used_memory", self.lua.used_memory() as i64);
             self.lua.gc_collect()?;
             self.invocations_after_gc = 0;
         }
+
         result
     }
 }
 
 impl Transform for Lua {
     fn transform(&mut self, event: Event) -> Option<Event> {
+        counter!("transforms.lua.events", 1);
         match self.process(event) {
             Ok(event) => event,
             Err(err) => {
                 error!(message = "Error in lua script; discarding event.", error = %format_error(&err), rate_limit_secs = 30);
+                counter!("transforms.lua.script_error", 1);
                 None
             }
         }
