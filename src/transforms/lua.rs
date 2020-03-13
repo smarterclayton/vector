@@ -3,9 +3,10 @@ use crate::{
     event::{Event, Value},
     topology::config::{DataType, TransformConfig, TransformContext, TransformDescription},
 };
-use metrics::{counter, gauge};
+use metrics::{counter, gauge, timing};
 use serde::{Deserialize, Serialize};
 use snafu::{ResultExt, Snafu};
+use std::time::Instant;
 
 #[derive(Debug, Snafu)]
 enum BuildError {
@@ -93,6 +94,7 @@ impl Lua {
     }
 
     fn process(&mut self, event: Event) -> Result<Option<Event>, rlua::Error> {
+        let start = Instant::now();
         let result = self.lua.context(|ctx| {
             let globals = ctx.globals();
 
@@ -109,6 +111,7 @@ impl Lua {
             self.lua.gc_collect()?;
             self.invocations_after_gc = 0;
         }
+        timing!("transforms.lua.processing_duration", start, Instant::now());
 
         result
     }

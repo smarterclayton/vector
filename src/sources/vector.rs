@@ -7,6 +7,7 @@ use crate::{
 };
 use bytes::{Bytes, BytesMut};
 use futures01::sync::mpsc;
+use metrics::counter;
 use prost::Message;
 use serde::{Deserialize, Serialize};
 use tokio::codec::LengthDelimitedCodec;
@@ -79,10 +80,12 @@ impl TcpSource for VectorSource {
                     message = "Received one event.",
                     event = field::debug(&event)
                 );
+                counter!("sources.vector.events", 1);
                 Some(event)
             }
             Err(e) => {
                 error!("failed to parse protobuf message: {:?}", e);
+                counter!("sources.vector.parse_errors", 1);
                 None
             }
         }

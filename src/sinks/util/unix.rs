@@ -8,6 +8,7 @@ use bytes::Bytes;
 use futures01::{
     future, stream::iter_ok, try_ready, Async, AsyncSink, Future, Poll, Sink, StartSend,
 };
+use metrics::counter;
 use serde::{Deserialize, Serialize};
 use snafu::Snafu;
 use std::io;
@@ -114,6 +115,7 @@ impl UnixSink {
                             self.path.to_str().unwrap(),
                             err
                         );
+                        counter!("sinks.unix_socket_connection_failures", 1);
                         UnixSinkState::Backoff(self.next_delay())
                     }
                     Ok(Async::Ready(stream)) => {
@@ -121,6 +123,7 @@ impl UnixSink {
                             message = "connected",
                             path = &field::display(self.path.to_str().unwrap())
                         );
+                        counter!("sinks.unix_socket_connections_established", 1);
                         self.backoff = Self::fresh_backoff();
                         let out = FramedWrite::new(stream, BytesCodec::new());
                         UnixSinkState::Open(out)
@@ -150,6 +153,7 @@ impl Sink for UnixSink {
     type SinkError = ();
 
     fn start_send(&mut self, line: Self::SinkItem) -> StartSend<Self::SinkItem, Self::SinkError> {
+        let byte_count = line.len() as u64;
         match self.poll_connection() {
             Ok(Async::NotReady) => Ok(AsyncSink::NotReady(line)),
             Err(_) => {
@@ -160,10 +164,15 @@ impl Sink for UnixSink {
                     let path = self.path.to_str().unwrap();
                     debug!(message = "disconnected.", path = &field::display(path));
                     error!("Error in connection {}: {}", path, err);
+                    counter!("sinks.unix_socket_errors", 1);
                     self.state = UnixSinkState::Disconnected;
                     Ok(AsyncSink::Ready)
                 }
-                Ok(res) => Ok(res),
+                Ok(res) => {
+                    counter!("sinks.unix_socket_events_sent", 1);
+                    counter!("sinks.unix_socket_bytes_sent", byte_count);
+                    Ok(res)
+                }
             },
         }
     }
@@ -182,6 +191,7 @@ impl Sink for UnixSink {
                 let path = self.path.to_str().unwrap();
                 debug!(message = "disconnected.", path = &field::display(&path));
                 error!("Error in connection {}: {}", path, err);
+                counter!("sinks.unix_socket_errors", 1);
                 self.state = UnixSinkState::Disconnected;
                 Ok(Async::Ready(()))
             }
