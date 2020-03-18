@@ -2394,14 +2394,6 @@ end
   # * type: [string]
   inputs = ["my-source-id"]
 
-  # Custom endpoint for use with AWS-compatible services. Providing a value for
-  # this option will make `region` moot.
-  #
-  # * required
-  # * type: string
-  # * required when region = ""
-  endpoint = "127.0.0.0:5000/path/to/service"
-
   # The group name of the target CloudWatch Logs stream.
   #
   # * required
@@ -2449,6 +2441,15 @@ end
   # * type: bool
   create_missing_stream = true
   create_missing_stream = false
+
+  # Custom endpoint for use with AWS-compatible services. Providing a value for
+  # this option will make `region` moot.
+  #
+  # * optional
+  # * no default
+  # * type: string
+  # * relevant when region = ""
+  endpoint = "127.0.0.0:5000/path/to/service"
 
   # Enables/disables the sink healthcheck upon start.
   #
@@ -2640,14 +2641,6 @@ end
   # * type: [string]
   inputs = ["my-source-id"]
 
-  # Custom endpoint for use with AWS-compatible services. Providing a value for
-  # this option will make `region` moot.
-  #
-  # * required
-  # * type: string
-  # * required when region = ""
-  endpoint = "127.0.0.0:5000/path/to/service"
-
   # A namespace that will isolate different metrics from each other.
   #
   # * required
@@ -2668,6 +2661,15 @@ end
   # * no default
   # * type: string
   assume_role = "arn:aws:iam::123456789098:role/my_role"
+
+  # Custom endpoint for use with AWS-compatible services. Providing a value for
+  # this option will make `region` moot.
+  #
+  # * optional
+  # * no default
+  # * type: string
+  # * relevant when region = ""
+  endpoint = "127.0.0.0:5000/path/to/service"
 
   # Enables/disables the sink healthcheck upon start.
   #
@@ -2718,14 +2720,6 @@ end
   # * type: [string]
   inputs = ["my-source-id"]
 
-  # Custom endpoint for use with AWS-compatible services. Providing a value for
-  # this option will make `region` moot.
-  #
-  # * required
-  # * type: string
-  # * required when region = ""
-  endpoint = "127.0.0.0:5000/path/to/service"
-
   # The AWS region of the target service. If `endpoint` is provided it will
   # override this value since the endpoint includes the region.
   #
@@ -2746,6 +2740,15 @@ end
   # * no default
   # * type: string
   assume_role = "arn:aws:iam::123456789098:role/my_role"
+
+  # Custom endpoint for use with AWS-compatible services. Providing a value for
+  # this option will make `region` moot.
+  #
+  # * optional
+  # * no default
+  # * type: string
+  # * relevant when region = ""
+  endpoint = "127.0.0.0:5000/path/to/service"
 
   # Enables/disables the sink healthcheck upon start.
   #
@@ -2937,14 +2940,6 @@ end
   # * type: [string]
   inputs = ["my-source-id"]
 
-  # Custom endpoint for use with AWS-compatible services. Providing a value for
-  # this option will make `region` moot.
-  #
-  # * required
-  # * type: string
-  # * required when region = ""
-  endpoint = "127.0.0.0:5000/path/to/service"
-
   # The AWS region of the target service. If `endpoint` is provided it will
   # override this value since the endpoint includes the region.
   #
@@ -2965,6 +2960,15 @@ end
   # * no default
   # * type: string
   assume_role = "arn:aws:iam::123456789098:role/my_role"
+
+  # Custom endpoint for use with AWS-compatible services. Providing a value for
+  # this option will make `region` moot.
+  #
+  # * optional
+  # * no default
+  # * type: string
+  # * relevant when region = ""
+  endpoint = "127.0.0.0:5000/path/to/service"
 
   # The log field used as the Kinesis record's partition key value.
   #
@@ -3169,14 +3173,6 @@ end
   compression = "gzip"
   compression = "none"
 
-  # Custom endpoint for use with AWS-compatible services. Providing a value for
-  # this option will make `region` moot.
-  #
-  # * required
-  # * type: string
-  # * required when region = ""
-  endpoint = "127.0.0.0:5000/path/to/service"
-
   # The AWS region of the target service. If `endpoint` is provided it will
   # override this value since the endpoint includes the region.
   #
@@ -3191,6 +3187,15 @@ end
   # * no default
   # * type: string
   assume_role = "arn:aws:iam::123456789098:role/my_role"
+
+  # Custom endpoint for use with AWS-compatible services. Providing a value for
+  # this option will make `region` moot.
+  #
+  # * optional
+  # * no default
+  # * type: string
+  # * relevant when region = ""
+  endpoint = "127.0.0.0:5000/path/to/service"
 
   # Enables/disables the sink healthcheck upon start.
   #
