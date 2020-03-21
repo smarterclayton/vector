@@ -11,6 +11,10 @@ status: "prod-ready"
 title: "Remove Fields Transform"
 ---
 
+import CodeHeader from '@site/src/components/CodeHeader';
+import Fields from '@site/src/components/Fields';
+import Field from '@site/src/components/Field';
+
 The Vector `remove_fields` transform
 accepts and outputs [`log`][docs.data-model.log] events allowing you to remove
 one or more log fields.
@@ -25,8 +29,6 @@ one or more log fields.
 
 ## Configuration
 
-import CodeHeader from '@site/src/components/CodeHeader';
-
 <CodeHeader text="vector.toml" learnMoreUrl="/docs/setup/configuration/"/ >
 
 ```toml
@@ -35,10 +37,6 @@ import CodeHeader from '@site/src/components/CodeHeader';
   inputs = ["my-source-id"] # required
   fields = ["field1", "field2", "parent.child"] # required
 ```
-
-import Fields from '@site/src/components/Fields';
-
-import Field from '@site/src/components/Field';
 
 <Fields filters={true}>
 

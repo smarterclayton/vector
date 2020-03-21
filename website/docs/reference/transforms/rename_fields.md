@@ -11,6 +11,11 @@ status: "prod-ready"
 title: "Rename Fields Transform"
 ---
 
+import Alert from '@site/src/components/Alert';
+import CodeHeader from '@site/src/components/CodeHeader';
+import Fields from '@site/src/components/Fields';
+import Field from '@site/src/components/Field';
+
 The Vector `rename_fields` transform
 accepts and [outputs `log` events](#output) allowing you to rename one or more
 log fields.
@@ -25,8 +30,6 @@ log fields.
 
 ## Configuration
 
-import CodeHeader from '@site/src/components/CodeHeader';
-
 <CodeHeader text="vector.toml" learnMoreUrl="/docs/setup/configuration/"/ >
 
 ```toml
@@ -39,10 +42,6 @@ import CodeHeader from '@site/src/components/CodeHeader';
   fields.old_field_name = "new_field_name" # example
   fields.parent.old_child_name = "parent.new_child_name" # example
 ```
-
-import Fields from '@site/src/components/Fields';
-
-import Field from '@site/src/components/Field';
 
 <Fields filters={true}>
 
@@ -162,8 +161,6 @@ full programming runtime.
 #### Key Conflicts
 
 Keys specified in this transform will replace existing keys.
-
-import Alert from '@site/src/components/Alert';
 
 <Alert type="warning">
 
