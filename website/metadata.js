@@ -21571,6 +21571,9 @@ module.exports = {
   "sinks": {
     "aws_cloudwatch_logs": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"aws_cloudwatch_logs\" # required\n  inputs = [\"in\"] # required\n  group_name = \"group-name\" # required\n  region = \"us-east-1\" # required, required when endpoint = \"\"\n  stream_name = \"{{ host }}\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Amazon Web Service's CloudWatch Logs service][urls.aws_cw_logs] via the [`PutLogEvents` API endpoint](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html).",
       "event_types": [
@@ -21578,6 +21581,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "aws_cloudwatch_logs_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "aws_cloudwatch_logs",
       "operating_systems": [
@@ -21597,6 +21603,9 @@ module.exports = {
     },
     "aws_cloudwatch_metrics": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"aws_cloudwatch_metrics\" # required\n  inputs = [\"in\"] # required\n  namespace = \"service\" # required\n  region = \"us-east-1\" # required, required when endpoint = \"\""
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Streams metric events to [Amazon Web Service's CloudWatch Metrics service][urls.aws_cw_metrics] via the [`PutMetricData` API endpoint](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_PutMetricData.html).",
       "event_types": [
@@ -21604,6 +21613,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "aws_cloudwatch_metrics_sink",
+      "input_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "aws_cloudwatch_metrics",
       "operating_systems": [
@@ -21623,6 +21635,9 @@ module.exports = {
     },
     "aws_kinesis_firehose": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"aws_kinesis_firehose\" # required\n  inputs = [\"in\"] # required\n  region = \"us-east-1\" # required, required when endpoint = \"\"\n  stream_name = \"my-stream\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Amazon Web Service's Kinesis Data Firehose][urls.aws_kinesis_data_firehose] via the [`PutRecordBatch` API endpoint](https://docs.aws.amazon.com/firehose/latest/APIReference/API_PutRecordBatch.html).",
       "event_types": [
@@ -21630,6 +21645,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "aws_kinesis_firehose_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "aws_kinesis_firehose",
       "operating_systems": [
@@ -21649,6 +21667,9 @@ module.exports = {
     },
     "aws_kinesis_streams": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"aws_kinesis_streams\" # required\n  inputs = [\"in\"] # required\n  region = \"us-east-1\" # required, required when endpoint = \"\"\n  stream_name = \"my-stream\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Amazon Web Service's Kinesis Data Stream service][urls.aws_kinesis_data_streams] via the [`PutRecords` API endpoint](https://docs.aws.amazon.com/kinesis/latest/APIReference/API_PutRecords.html).",
       "event_types": [
@@ -21656,6 +21677,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "aws_kinesis_streams_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "aws_kinesis_streams",
       "operating_systems": [
@@ -21675,6 +21699,9 @@ module.exports = {
     },
     "aws_s3": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"aws_s3\" # required\n  inputs = [\"in\"] # required\n  bucket = \"my-bucket\" # required\n  compression = \"gzip\" # required\n  region = \"us-east-1\" # required, required when endpoint = \"\"\n\n  # Encoding\n  encoding.codec = \"ndjson\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Amazon Web Service's S3 service][urls.aws_s3] via the [`PutObject` API endpoint](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUT.html).",
       "event_types": [
@@ -21682,6 +21709,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "aws_s3_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": "/img/logos/aws_s3.svg",
       "name": "aws_s3",
       "operating_systems": [
@@ -21701,6 +21731,9 @@ module.exports = {
     },
     "blackhole": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"blackhole\" # required\n  inputs = [\"in\"] # required\n  print_amount = 1000 # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams log and metric events to a blackhole that simply discards data, designed for testing and benchmarking purposes.",
       "event_types": [
@@ -21709,6 +21742,10 @@ module.exports = {
       ],
       "function_category": "test",
       "id": "blackhole_sink",
+      "input_types": [
+        "log",
+        "metric"
+      ],
       "logo_path": null,
       "name": "blackhole",
       "operating_systems": [
@@ -21728,6 +21765,9 @@ module.exports = {
     },
     "clickhouse": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"clickhouse\" # required\n  inputs = [\"in\"] # required\n  host = \"http://localhost:8123\" # required\n  table = \"mytable\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [Clickhouse][urls.clickhouse] via the [`HTTP` Interface][urls.clickhouse_http].",
       "event_types": [
@@ -21735,6 +21775,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "clickhouse_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "clickhouse",
       "operating_systems": [
@@ -21754,6 +21797,9 @@ module.exports = {
     },
     "console": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"console\" # required\n  inputs = [\"in\"] # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams log and metric events to [standard output streams][urls.standard_streams], such as `STDOUT` and `STDERR`.",
       "event_types": [
@@ -21762,6 +21808,10 @@ module.exports = {
       ],
       "function_category": "test",
       "id": "console_sink",
+      "input_types": [
+        "log",
+        "metric"
+      ],
       "logo_path": null,
       "name": "console",
       "operating_systems": [
@@ -21781,6 +21831,9 @@ module.exports = {
     },
     "datadog_metrics": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"datadog_metrics\" # required\n  inputs = [\"in\"] # required\n  api_key = \"${DATADOG_API_KEY}\" # required\n  namespace = \"service\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches metric events to [Datadog's][urls.datadog] metrics service using [HTTP API](https://docs.datadoghq.com/api/?lang=bash#metrics).",
       "event_types": [
@@ -21788,6 +21841,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "datadog_metrics_sink",
+      "input_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "datadog_metrics",
       "operating_systems": [
@@ -21807,6 +21863,9 @@ module.exports = {
     },
     "elasticsearch": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"elasticsearch\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [Elasticsearch][urls.elasticsearch] via the [`_bulk` API endpoint](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html).",
       "event_types": [
@@ -21814,6 +21873,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "elasticsearch_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "elasticsearch",
       "operating_systems": [
@@ -21834,6 +21896,9 @@ module.exports = {
     },
     "file": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"file\" # required\n  inputs = [\"in\"] # required\n  path = \"vector-%Y-%m-%d.log\" # required\n\n  # Encoding\n  encoding.codec = \"ndjson\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams log events to a file.",
       "event_types": [
@@ -21841,6 +21906,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "file_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "file",
       "operating_systems": [
@@ -21860,6 +21928,9 @@ module.exports = {
     },
     "gcp_cloud_storage": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"gcp_cloud_storage\" # required\n  inputs = [\"in\"] # required\n  bucket = \"my-bucket\" # required\n  compression = \"gzip\" # required\n  credentials_path = \"/path/to/credentials.json\" # required\n\n  # Encoding\n  encoding.codec = \"ndjson\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Google Cloud Platform's Cloud Storage service](https://cloud.google.com/storage) via the [XML Interface](https://cloud.google.com/storage/docs/xml-api/overview).",
       "event_types": [
@@ -21867,6 +21938,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "gcp_cloud_storage_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "gcp_cloud_storage",
       "operating_systems": [
@@ -21886,6 +21960,9 @@ module.exports = {
     },
     "gcp_pubsub": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"gcp_pubsub\" # required\n  inputs = [\"in\"] # required\n  project = \"vector-123456\" # required\n  topic = \"this-is-a-topic\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [Google Cloud Platform's Pubsub service][urls.gcp_pubsub] via the [REST Interface][urls.gcp_pubsub_rest].",
       "event_types": [
@@ -21893,6 +21970,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "gcp_pubsub_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "gcp_pubsub",
       "operating_systems": [
@@ -21912,6 +21992,9 @@ module.exports = {
     },
     "gcp_stackdriver_logging": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"gcp_stackdriver_logging\" # required\n  inputs = [\"in\"] # required\n  credentials_path = \"/path/to/credentials.json\" # required\n  log_id = \"vector-logs\" # required\n  project_id = \"vector-123456\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [Google Cloud Platform's Stackdriver Logging service][urls.gcp_stackdriver_logging] via the [REST Interface][urls.gcp_stackdriver_logging_rest].",
       "event_types": [
@@ -21919,6 +22002,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "gcp_stackdriver_logging_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "gcp_stackdriver_logging",
       "operating_systems": [
@@ -21938,6 +22024,9 @@ module.exports = {
     },
     "honeycomb": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"honeycomb\" # required\n  inputs = [\"in\"] # required\n  api_key = \"${HONEYCOMB_API_KEY}\" # required\n  dataset = \"my-honeycomb-dataset\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Honeycomb][urls.honeycomb] via the [batch events API][urls.honeycomb_batch].",
       "event_types": [
@@ -21945,6 +22034,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "honeycomb_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "honeycomb",
       "operating_systems": [
@@ -21964,6 +22056,9 @@ module.exports = {
     },
     "http": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"http\" # required\n  inputs = [\"in\"] # required\n  uri = \"https://10.22.212.22:9000/endpoint\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to a generic HTTP endpoint.",
       "event_types": [
@@ -21971,6 +22066,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "http_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "http",
       "operating_systems": [
@@ -21990,6 +22088,9 @@ module.exports = {
     },
     "humio_logs": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"humio_logs\" # required\n  inputs = [\"in\"] # required\n  token = \"${HUMIO_TOKEN}\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [Humio][urls.humio] via the [HEC API][urls.humio_hec].",
       "event_types": [
@@ -21997,6 +22098,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "humio_logs_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "humio_logs",
       "operating_systems": [
@@ -22016,6 +22120,9 @@ module.exports = {
     },
     "influxdb_metrics": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"influxdb_metrics\" # required\n  inputs = [\"in\"] # required\n  bucket = \"vector-bucket\" # required\n  database = \"vector-database\" # required\n  endpoint = \"https://us-west-2-1.aws.cloud2.influxdata.com\" # required\n  namespace = \"service\" # required\n\n  # auth\n  org = \"Organization\" # required\n  token = \"${INFLUXDB_TOKEN}\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches metric events to [InfluxDB][urls.influxdb] using [v1][urls.influxdb_http_api_v1] or [v2][urls.influxdb_http_api_v2] HTTP API.",
       "event_types": [
@@ -22023,6 +22130,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "influxdb_metrics_sink",
+      "input_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "influxdb_metrics",
       "operating_systems": [
@@ -22042,6 +22152,9 @@ module.exports = {
     },
     "kafka": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"kafka\" # required\n  inputs = [\"in\"] # required\n  bootstrap_servers = \"10.14.22.123:9092,10.14.23.332:9092\" # required\n  key_field = \"user_id\" # required\n  topic = \"topic-1234\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Streams log events to [Apache Kafka][urls.kafka] via the [Kafka protocol][urls.kafka_protocol].",
       "event_types": [
@@ -22049,6 +22162,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "kafka_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "kafka",
       "operating_systems": [
@@ -22069,6 +22185,9 @@ module.exports = {
     },
     "logdna": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"logdna\" # required\n  inputs = [\"in\"] # required\n  api_key = \"${LOGDNA_API_KEY}\" # required\n  hostname = \"my-local-machine\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [LogDna][urls.logdna]'s HTTP Ingestion API.",
       "event_types": [
@@ -22076,6 +22195,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "logdna_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "logdna",
       "operating_systems": [
@@ -22095,6 +22217,9 @@ module.exports = {
     },
     "loki": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"loki\" # required\n  inputs = [\"in\"] # required\n  endpoint = \"http://localhost:3100\" # required\n\n  # Labels\n  labels.key = \"value\" # example\n  labels.key = \"{{ event_field }}\" # example"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [Loki][urls.loki].",
       "event_types": [
@@ -22102,6 +22227,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "loki_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "loki",
       "operating_systems": [
@@ -22121,6 +22249,9 @@ module.exports = {
     },
     "new_relic_logs": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"new_relic_logs\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to [New Relic's log service][urls.new_relic] via their [log API][urls.new_relic_log_api].",
       "event_types": [
@@ -22128,6 +22259,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "new_relic_logs_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "new_relic_logs",
       "operating_systems": [
@@ -22147,6 +22281,9 @@ module.exports = {
     },
     "papertrail": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"papertrail\" # required\n  inputs = [\"in\"] # required\n  endpoint = \"logs.papertrailapp.com:12345\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams log events to [Papertrail](https://www.papertrail.com/) via [Syslog](https://help.papertrailapp.com/kb/how-it-works/http-api/#submitting-log-messages).",
       "event_types": [
@@ -22154,6 +22291,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "papertrail_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "papertrail",
       "operating_systems": [
@@ -22173,6 +22313,9 @@ module.exports = {
     },
     "prometheus": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"prometheus\" # required\n  inputs = [\"in\"] # required\n  address = \"0.0.0.0:9598\" # required\n  namespace = \"service\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Exposes metric events to [Prometheus][urls.prometheus] metrics service.",
       "event_types": [
@@ -22180,6 +22323,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "prometheus_sink",
+      "input_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "prometheus",
       "operating_systems": [
@@ -22199,6 +22345,9 @@ module.exports = {
     },
     "pulsar": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  address = \"127.0.0.1:6650\" # required\n  topic = \"topic-1234\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Streams log events to [Apache Pulsar][urls.pulsar] via the [Pulsar protocol][urls.pulsar_protocol].",
       "event_types": [
@@ -22206,6 +22355,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "pulsar_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "pulsar",
       "operating_systems": [
@@ -22225,6 +22377,9 @@ module.exports = {
     },
     "sematext_logs": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"sematext_logs\" # required\n  inputs = [\"in\"] # required\n  token = \"${SEMATEXT_TOKEN}\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Batches log events to [Sematext][urls.sematext] via the [Elasticsearch API][urls.sematext_es].",
       "event_types": [
@@ -22232,6 +22387,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "sematext_logs_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "sematext_logs",
       "operating_systems": [
@@ -22251,6 +22409,9 @@ module.exports = {
     },
     "socket": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"socket\" # required\n  inputs = [\"in\"] # required\n  address = \"92.12.333.224:5000\" # required, required when mode = \"tcp\"\n  mode = \"tcp\" # required\n  path = \"/path/to/socket\" # required, required when mode = \"unix\"\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams log events to a socket, such as a TCP or Unix domain socket.",
       "event_types": [
@@ -22258,6 +22419,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "socket_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "socket",
       "operating_systems": [
@@ -22277,6 +22441,9 @@ module.exports = {
     },
     "splunk_hec": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sinks.out]\n  # General\n  type = \"splunk_hec\" # required\n  inputs = [\"in\"] # required\n  host = \"http://my-splunk-host.com\" # required\n  token = \"${SPLUNK_HEC_TOKEN}\" # required\n\n  # Encoding\n  encoding.codec = \"json\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Batches log events to a [Splunk's HTTP Event Collector][urls.splunk_hec].",
       "event_types": [
@@ -22284,6 +22451,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "splunk_hec_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "splunk_hec",
       "operating_systems": [
@@ -22303,6 +22473,9 @@ module.exports = {
     },
     "statsd": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"statsd\" # required\n  inputs = [\"in\"] # required\n  namespace = \"service\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams metric events to [StatsD][urls.statsd] metrics service.",
       "event_types": [
@@ -22310,6 +22483,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "statsd_sink",
+      "input_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "statsd",
       "operating_systems": [
@@ -22329,6 +22505,9 @@ module.exports = {
     },
     "vector": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sinks.out]\n  type = \"vector\" # required\n  inputs = [\"in\"] # required\n  address = \"92.12.333.224:5000\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Streams log events to another downstream [`vector` source][docs.sources.vector].",
       "event_types": [
@@ -22336,6 +22515,9 @@ module.exports = {
       ],
       "function_category": "transmit",
       "id": "vector_sink",
+      "input_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "vector",
       "operating_systems": [
@@ -22357,6 +22539,9 @@ module.exports = {
   "sources": {
     "docker": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"docker\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through the [Docker engine daemon][urls.docker_daemon] and outputs log events.",
       "event_types": [
@@ -22371,6 +22556,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22383,6 +22571,9 @@ module.exports = {
     },
     "file": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"file\" # required\n  include = [\"/var/log/nginx/*.log\"] # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through one or more local files and outputs log events.",
       "event_types": [
@@ -22397,6 +22588,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22409,6 +22603,9 @@ module.exports = {
     },
     "http": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"http\" # required\n  address = \"0.0.0.0:80\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through the HTTP protocol and outputs log events.",
       "event_types": [
@@ -22423,6 +22620,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22435,6 +22635,9 @@ module.exports = {
     },
     "journald": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"journald\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Ingests data through log records from journald and outputs log events.",
       "event_types": [
@@ -22446,6 +22649,9 @@ module.exports = {
       "name": "journald",
       "operating_systems": [
         "Linux"
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22460,6 +22666,9 @@ module.exports = {
     },
     "kafka": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"kafka\" # required\n  bootstrap_servers = \"10.14.22.123:9092,10.14.23.332:9092\" # required\n  group_id = \"consumer-group-name\" # required\n  topics = [\"^(prefix1|prefix2)-.+\", \"topic-1\", \"topic-2\"] # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Ingests data through Kafka and outputs log events.",
       "event_types": [
@@ -22474,6 +22683,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22486,6 +22698,9 @@ module.exports = {
     },
     "logplex": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"logplex\" # required\n  address = \"0.0.0.0:80\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Ingests data through the [Heroku Logplex HTTP Drain protocol][urls.logplex_protocol] and outputs log events.",
       "event_types": [
@@ -22500,6 +22715,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22512,6 +22730,9 @@ module.exports = {
     },
     "prometheus": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"prometheus\" # required\n  hosts = [\"http://localhost:9090\"] # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through the Prometheus text exposition format and outputs metric events.",
       "event_types": [
@@ -22526,6 +22747,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "metric"
+      ],
       "service_providers": [
 
       ],
@@ -22538,6 +22762,9 @@ module.exports = {
     },
     "socket": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"socket\" # required\n  address = \"0.0.0.0:9000\" # required, required when mode = \"tcp\" or mode = \"udp\"\n  mode = \"tcp\" # required\n  path = \"/path/to/socket\" # required, required when mode = \"unix\""
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through a socket, such as a TCP, UDP, or Unix socket and outputs log events.",
       "event_types": [
@@ -22552,6 +22779,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22564,6 +22794,9 @@ module.exports = {
     },
     "splunk_hec": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"splunk_hec\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Ingests data through the [Splunk HTTP Event Collector protocol][urls.splunk_hec_protocol] and outputs log events.",
       "event_types": [
@@ -22578,6 +22811,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22590,6 +22826,9 @@ module.exports = {
     },
     "statsd": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"statsd\" # required\n  address = \"127.0.0.1:8126\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through the StatsD UDP protocol and outputs metric events.",
       "event_types": [
@@ -22604,6 +22843,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "metric"
+      ],
       "service_providers": [
 
       ],
@@ -22616,6 +22858,9 @@ module.exports = {
     },
     "stdin": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"stdin\" # required"
+      },
       "delivery_guarantee": "at_least_once",
       "description": "Ingests data through standard input (STDIN) and outputs log events.",
       "event_types": [
@@ -22630,6 +22875,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22642,6 +22890,9 @@ module.exports = {
     },
     "syslog": {
       "beta": false,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"syslog\" # required\n  address = \"0.0.0.0:514\" # required, required when mode = \"tcp\" or mode = \"udp\"\n  mode = \"tcp\" # required\n  path = \"/path/to/socket\" # required, required when mode = \"unix\""
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through the Syslog protocol and outputs log events.",
       "event_types": [
@@ -22656,6 +22907,9 @@ module.exports = {
         "MacOS",
         "Windows"
       ],
+      "output_types": [
+        "log"
+      ],
       "service_providers": [
 
       ],
@@ -22668,6 +22922,9 @@ module.exports = {
     },
     "vector": {
       "beta": true,
+      "config_examples": {
+        "toml": "[sources.in]\n  type = \"vector\" # required\n  address = \"0.0.0.0:9000\" # required"
+      },
       "delivery_guarantee": "best_effort",
       "description": "Ingests data through another upstream [`vector` sink][docs.sinks.vector] and outputs log and metric events.",
       "event_types": [
@@ -22682,6 +22939,10 @@ module.exports = {
         "Linux",
         "MacOS",
         "Windows"
+      ],
+      "output_types": [
+        "log",
+        "metric"
       ],
       "service_providers": [
 
@@ -22764,6 +23025,9 @@ module.exports = {
   "transforms": {
     "add_fields": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  # General\n  type = \"add_fields\" # required\n  inputs = [\"in\"] # required\n\n  # Fields\n  fields.string_field = \"string value\" # example\n  fields.env_var_field = \"${ENV_VAR}\" # example\n  fields.int_field = 1 # example\n  fields.float_field = 1.2 # example\n  fields.bool_field = true # example\n  fields.timestamp_field = 1979-05-27T00:32:00Z # example\n  fields.parent.child_field = \"child_value\" # example\n  fields.list_field = [\"first\", \"second\", \"third\"] # example"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to add one or more log fields.",
       "event_types": [
@@ -22771,10 +23035,16 @@ module.exports = {
       ],
       "function_category": "shape",
       "id": "add_fields_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "add_fields",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22788,6 +23058,9 @@ module.exports = {
     },
     "add_tags": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  # General\n  type = \"add_tags\" # required\n  inputs = [\"in\"] # required\n\n  # Tags\n  tags.static_tag = \"my value\" # example\n  tags.env_tag = \"${ENV_VAR}\" # example"
+      },
       "delivery_guarantee": null,
       "description": "Accepts metric events and allows you to add one or more metric tags.",
       "event_types": [
@@ -22795,10 +23068,16 @@ module.exports = {
       ],
       "function_category": "shape",
       "id": "add_tags_transform",
+      "inpuut_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "add_tags",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "metric"
       ],
       "service_providers": [
 
@@ -22812,6 +23091,9 @@ module.exports = {
     },
     "ansi_stripper": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"ansi_stripper\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to strips ANSI escape sequences from the specified field.",
       "event_types": [
@@ -22819,10 +23101,16 @@ module.exports = {
       ],
       "function_category": "sanitize",
       "id": "ansi_stripper_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "ansi_stripper",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22836,6 +23124,9 @@ module.exports = {
     },
     "aws_ec2_metadata": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"aws_ec2_metadata\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to enrich logs with AWS EC2 instance metadata.",
       "event_types": [
@@ -22843,10 +23134,16 @@ module.exports = {
       ],
       "function_category": "enrich",
       "id": "aws_ec2_metadata_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "aws_ec2_metadata",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22860,6 +23157,9 @@ module.exports = {
     },
     "coercer": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"coercer\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to coerce log fields into fixed types.",
       "event_types": [
@@ -22867,10 +23167,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "coercer_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "coercer",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22884,6 +23190,9 @@ module.exports = {
     },
     "concat": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"concat\" # required\n  inputs = [\"in\"] # required\n  items = [\"first[..3]\", \"second[-5..]\", \"third[3..6]\"] # required\n  target = \"root_field_name\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to concat (substrings) of other fields to a new one.",
       "event_types": [
@@ -22891,10 +23200,16 @@ module.exports = {
       ],
       "function_category": "shape",
       "id": "concat_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "concat",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22908,6 +23223,9 @@ module.exports = {
     },
     "dedupe": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  # General\n  type = \"dedupe\" # required\n  inputs = [\"in\"] # required\n\n  # Fields"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to prevent duplicate Events from being outputted by using an LRU cache.",
       "event_types": [
@@ -22915,10 +23233,16 @@ module.exports = {
       ],
       "function_category": "filter",
       "id": "dedupe_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "dedupe",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22932,6 +23256,9 @@ module.exports = {
     },
     "field_filter": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"field_filter\" # required\n  inputs = [\"in\"] # required\n  field = \"application_id\" # required\n  value = \"/var/log/nginx.log\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to filter events by a log field's value.",
       "event_types": [
@@ -22939,10 +23266,16 @@ module.exports = {
       ],
       "function_category": "filter",
       "id": "field_filter_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "field_filter",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22956,6 +23289,9 @@ module.exports = {
     },
     "geoip": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"geoip\" # required\n  inputs = [\"in\"] # required\n  database = \"/path/to/GeoLite2-City.mmdb\" # required\n  source = \"ip_address\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to enrich events with geolocation data from the MaxMind GeoIP2 and GeoLite2 city databases.",
       "event_types": [
@@ -22963,10 +23299,16 @@ module.exports = {
       ],
       "function_category": "enrich",
       "id": "geoip_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "geoip",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -22980,6 +23322,9 @@ module.exports = {
     },
     "grok_parser": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"grok_parser\" # required\n  inputs = [\"in\"] # required\n  pattern = \"%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} %{GREEDYDATA:message}\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to parse a log field value with [Grok][urls.grok].",
       "event_types": [
@@ -22987,10 +23332,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "grok_parser_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "grok_parser",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23004,6 +23355,9 @@ module.exports = {
     },
     "json_parser": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"json_parser\" # required\n  inputs = [\"in\"] # required\n  drop_invalid = true # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to parse a log field value as JSON.",
       "event_types": [
@@ -23011,10 +23365,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "json_parser_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "json_parser",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23028,6 +23388,9 @@ module.exports = {
     },
     "log_to_metric": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  # General\n  type = \"log_to_metric\" # required\n  inputs = [\"in\"] # required\n\n  # Metrics\n  metrics.type = \"counter\" # required\n  metrics.field = \"duration\" # required\n  metrics.name = \"duration_total\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to convert logs into one or more metrics.",
       "event_types": [
@@ -23036,10 +23399,16 @@ module.exports = {
       ],
       "function_category": "convert",
       "id": "log_to_metric_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "log_to_metric",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "metric"
       ],
       "service_providers": [
 
@@ -23053,6 +23422,9 @@ module.exports = {
     },
     "logfmt_parser": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"logfmt_parser\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to extract data from a logfmt-formatted log field.",
       "event_types": [
@@ -23060,10 +23432,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "logfmt_parser_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "logfmt_parser",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23077,6 +23455,9 @@ module.exports = {
     },
     "lua": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"lua\" # required\n  inputs = [\"in\"] # required\n  source = \"\"\"\n  require(\"script\") # a `script.lua` file must be in your `search_dirs`\n\n  if event[\"host\"] == nil then\n    local f = io.popen (\"/bin/hostname\")\n    local hostname = f:read(\"*a\") or \"\"\n    f:close()\n    hostname = string.gsub(hostname, \"\\n$\", \"\")\n    event[\"host\"] = hostname\n  end\n  \"\"\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to transform events with a full embedded [Lua][urls.lua] engine.",
       "event_types": [
@@ -23084,10 +23465,16 @@ module.exports = {
       ],
       "function_category": "program",
       "id": "lua_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "lua",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23101,6 +23488,9 @@ module.exports = {
     },
     "merge": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"merge\" # required\n  inputs = [\"in\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to merge partial log events into a single event.",
       "event_types": [
@@ -23108,10 +23498,16 @@ module.exports = {
       ],
       "function_category": "aggregate",
       "id": "merge_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "merge",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23125,6 +23521,9 @@ module.exports = {
     },
     "regex_parser": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"regex_parser\" # required\n  inputs = [\"in\"] # required\n  regex = \"^(?P<timestamp>[\\\\w\\\\-:\\\\+]+) (?P<level>\\\\w+) (?P<message>.*)$\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to parse a log field's value with a [Regular Expression][urls.regex].",
       "event_types": [
@@ -23132,10 +23531,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "regex_parser_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "regex_parser",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23149,6 +23554,9 @@ module.exports = {
     },
     "remove_fields": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"remove_fields\" # required\n  inputs = [\"in\"] # required\n  fields = [\"field1\", \"field2\", \"parent.child\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to remove one or more log fields.",
       "event_types": [
@@ -23156,10 +23564,16 @@ module.exports = {
       ],
       "function_category": "shape",
       "id": "remove_fields_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "remove_fields",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23173,6 +23587,9 @@ module.exports = {
     },
     "remove_tags": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"remove_tags\" # required\n  inputs = [\"in\"] # required\n  tags = [\"tag1\", \"tag2\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts metric events and allows you to remove one or more metric tags.",
       "event_types": [
@@ -23180,10 +23597,16 @@ module.exports = {
       ],
       "function_category": "shape",
       "id": "remove_tags_transform",
+      "inpuut_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "remove_tags",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "metric"
       ],
       "service_providers": [
 
@@ -23197,6 +23620,9 @@ module.exports = {
     },
     "rename_fields": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  # General\n  type = \"rename_fields\" # required\n  inputs = [\"in\"] # required\n\n  # Fields\n  fields.old_field_name = \"new_field_name\" # example\n  fields.parent.old_child_name = \"parent.new_child_name\" # example"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to rename one or more log fields.",
       "event_types": [
@@ -23204,10 +23630,16 @@ module.exports = {
       ],
       "function_category": "shape",
       "id": "rename_fields_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "rename_fields",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23221,6 +23653,9 @@ module.exports = {
     },
     "sampler": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"sampler\" # required\n  inputs = [\"in\"] # required\n  rate = 10 # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to sample events with a configurable rate.",
       "event_types": [
@@ -23228,10 +23663,16 @@ module.exports = {
       ],
       "function_category": "filter",
       "id": "sampler_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "sampler",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23245,6 +23686,9 @@ module.exports = {
     },
     "split": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"split\" # required\n  inputs = [\"in\"] # required\n  field_names = [\"timestamp\", \"level\", \"message\", \"parent.child\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to split a field's value on a _literal_ separator and zip the tokens into ordered field names.",
       "event_types": [
@@ -23252,10 +23696,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "split_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "split",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23269,6 +23719,9 @@ module.exports = {
     },
     "swimlanes": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  # General\n  type = \"swimlanes\" # required\n  inputs = [\"in\"] # required\n\n  # Lanes\n  [transforms.out.lanes.`[swimlane-id]`]"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to route events across parallel streams using logical filters.",
       "event_types": [
@@ -23276,10 +23729,16 @@ module.exports = {
       ],
       "function_category": "route",
       "id": "swimlanes_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "swimlanes",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
@@ -23293,6 +23752,9 @@ module.exports = {
     },
     "tag_cardinality_limit": {
       "beta": true,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"tag_cardinality_limit\" # required\n  inputs = [\"in\"] # required\n  mode = \"exact\" # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts metric events and allows you to limit the cardinality of metric tags to prevent downstream disruption of metrics services.",
       "event_types": [
@@ -23300,10 +23762,16 @@ module.exports = {
       ],
       "function_category": "filter",
       "id": "tag_cardinality_limit_transform",
+      "inpuut_types": [
+        "metric"
+      ],
       "logo_path": null,
       "name": "tag_cardinality_limit",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "metric"
       ],
       "service_providers": [
 
@@ -23317,6 +23785,9 @@ module.exports = {
     },
     "tokenizer": {
       "beta": false,
+      "config_examples": {
+        "toml": "[transforms.out]\n  type = \"tokenizer\" # required\n  inputs = [\"in\"] # required\n  field_names = [\"timestamp\", \"level\", \"message\", \"parent.child\"] # required"
+      },
       "delivery_guarantee": null,
       "description": "Accepts log events and allows you to tokenize a field's value by splitting on white space, ignoring special wrapping characters, and zip the tokens into ordered field names.",
       "event_types": [
@@ -23324,10 +23795,16 @@ module.exports = {
       ],
       "function_category": "parse",
       "id": "tokenizer_transform",
+      "inpuut_types": [
+        "log"
+      ],
       "logo_path": null,
       "name": "tokenizer",
       "operating_systems": [
 
+      ],
+      "output_types": [
+        "log"
       ],
       "service_providers": [
 
